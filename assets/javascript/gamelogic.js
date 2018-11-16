@@ -52,16 +52,6 @@ class Question {
   }
 }
 
-filterString("in &quot;quotes&quot;")
-filterString("Pok&eacute;mon")
-function filterString(input) {
-
-  var regex = /&(.*?);/g
-  var math = input.match(regex, "*")
-  
-  console.log("filted: " + output)
-}
-
 /**
  * Builds a questionArray by pulling questions from a databse API
  * @param {string} source - url to send get request
@@ -137,8 +127,8 @@ function updateUI (q) {
   // random number decides where in the choiceText array the correct answer will be
   console.log(q.answer)
   answerIndex =  Math.floor(Math.random() * (4 - 0) );
-  $("#question").text(q.question)
-  $("#score").text(score)
+  $("#question").html(q.question)
+  $("#score").html(score)
   //current index of choices
   var c = 0
   //current index of choicesText
@@ -147,9 +137,9 @@ function updateUI (q) {
     // i increments every loop
     // c only increments if an incorrect answer is written
     if (i === answerIndex) {
-      $(choicesText[i]).text(q.answer)
+      $(choicesText[i]).html(q.answer)
     } else {
-      $(choicesText[i]).text(q.choices[c])
+      $(choicesText[i]).html(q.choices[c])
       c++
     }
 
