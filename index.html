@@ -25,30 +25,32 @@
       <legend>Answers:</legend>
       <div class="form-check">
         <label class="form-check-label">
-          <input class="form-check-input" id="choice-one-check" type="checkbox" value="">
-          <span class="choice-text" id="choice-one">This will be multiple choice answer</span>
+          <input type="radio" class="form-check-input" name="optionsRadios" value="" checked="">
+          <div class="choice-text">This will be multiple choice quiz</div>
         </label>
       </div>
       <div class="form-check">
         <label class="form-check-label">
-          <input class="form-check-input" id="choice-two-check" type="checkbox" value="">
-          <span class="choice-text" id="choice-two">Check the box if you think this choice is true </span>
+          <input type="radio" class="form-check-input" name="optionsRadios" value="" checked="">
+          <div class="choice-text">Check the box corresponding to your answer</div>
         </label>
       </div>
       <div class="form-check">
         <label class="form-check-label">
-          <input class="form-check-input" id="choice-three-check" type="checkbox" value="">
-          <span class="choice-text" id="choice-three">Guess as many as you think are correct</span>
+          <input type="radio" class="form-check-input" name="optionsRadios" value="" checked="">
+          <div class="choice-text">Then press 'Submit'</div>
         </label>
       </div>
       <div class="form-check">
         <label class="form-check-label">
-          <input class="form-check-input" id="choice-four-check" type="checkbox" value="">
-          <span class="choice-text" id="choice-four">There can be multiple right answers, or there might be none!</span>
+          <input type="radio" class="form-check-input" name="optionsRadios" value="" checked="">
+          <div class="choice-text">You have limited time for each question</div>
         </label>
       </div>
-      <button type="submit" class="btn btn-primary" id="submit-btn">Start Game!</button>
+      <button type="submit" class="btn btn-primary" id="next-btn" disabled="true">Next</button>
     </fieldset>
+    <h2>Score: <span id="score">0</span></h2>
+    <h2>Round: <span id="round">0</span> of <span id="total-rounds">10</span></h2>
   </div>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>

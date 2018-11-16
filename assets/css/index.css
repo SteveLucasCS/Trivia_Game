@@ -1,6 +1,7 @@
 body {
   width: 70%;
   margin: auto;
+  font-size: 1.4rem;
 }
 
 .jumbotron {
@@ -16,7 +17,16 @@ body {
   font-weight: normal;
 } 
 
-#submit-btn {
+#next-btn {
   width: 8rem;
   height: 3rem;
+}
+.choice-text {
+  display: inline-block;
+  margin: 0;
+}
+
+h2 {
+  text-align: center;
+  font-weight: bold;
 }
