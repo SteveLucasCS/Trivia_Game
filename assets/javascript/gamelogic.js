@@ -21,6 +21,11 @@ var choicesCheck = $("input:radio").toArray()
 /** The indeces(or index) of correct answer(s) */
 var answerIndex = 0
 
+/** Round timer */
+var timer
+var timeLimit = 10
+var countdown = 10
+
 var srcDifficulty = "easy"
 var srcComputerScience = `https://opentdb.com/api.php?amount=10&category=18&difficulty=${srcDifficulty}&type=multiple`
 var srcVideoGames = `https://opentdb.com/api.php?amount=10&category=15&difficulty=${srcDifficulty}&type=multiple`
@@ -42,12 +47,11 @@ class Question {
    * @param {string[] || string} answer - array of answer corresponding to the choice at the same index
    */
   constructor(question, choices, answer) {
-    
+
     this.question = question
     this.choices = choices
     this.answer = answer
     this.choices.push(answer)
-    console.log(this.question)
 
   }
 }
@@ -88,7 +92,7 @@ function buildQuestionList(results) {
   for (var i = 0; i < results.length; i++) {
     questionArray.push(new Question(results[i].question,
       results[i].incorrect_answers, results[i].correct_answer))
-    }
+  }
 }
 
 
@@ -110,30 +114,31 @@ function checkAnswer() {
   for (var i = 0; i < 4; i++) {
     i === answerIndex ? $(choicesText[i]).css("color", "green") :
       $(choicesText[i]).css("color", "red")
+    $(choicesCheck[i]).prop("disabled", true)
   }
-  
+
   if (choicesCheck[answerIndex].checked)
     score++
-  
+
   $("#score").text(score)
-  $("#next-btn").show()
+  $("#next-btn").prop("disabled", false)
+  clearInterval(timer)
 }
 
 /**
  * Update's HTML based on parameters
  * @param {Question} q- a question object representing the current question
  */
-function updateUI (q) {
+function nextRound(q) {
   // random number decides where in the choiceText array the correct answer will be
-  console.log(q.answer)
-  answerIndex =  Math.floor(Math.random() * (4 - 0) );
+  answerIndex = Math.floor(Math.random() * (4 - 0));
   $("#question").html(q.question)
   $("#score").html(score)
   //current index of choices
   var c = 0
   //current index of choicesText
   var i = 0
-  while ( i < 4) {
+  while (i < 4) {
     // i increments every loop
     // c only increments if an incorrect answer is written
     if (i === answerIndex) {
@@ -146,49 +151,59 @@ function updateUI (q) {
     //unchecks checked box
     if (choicesCheck[i].checked)
       choicesCheck[i].checked = false
-    
+    if ($(choicesCheck[i]).prop("disabled"))
+      $(choicesCheck[i]).prop("disabled", false)
+
     $(choicesText[i]).css("color", "black")
-    $("#round").text(round+1)
+    $("#round").text(round + 1)
     //total number of rounds
     $("#total-rounds").text(srcAmount)
     i++
   }
-  $("#next-btn").prop("disabled", true)
+  countdown = timeLimit
+  $("#countdown").text(countdown)
+  timer = setInterval(tick, 1000)
+
 }
 
-/** Current question object based on the round */
-var curQuestion = new Question("This is a test question",
-  ["choice 1", "choice 2", "choice 3", "choice 4"], "choice 2")
+function tick() {
+  countdown--
+  $("#countdown").text(countdown)
+  if (countdown === 0) {
+    checkAnswer()
+  }
+}
 
-var defaultQuestionArray = defaultQuestions()
+
 
 /** main questionArray containing all questions for a game */
 var questionArray = []
 
-// Main execution
-downloadQuestions(srcVideoGames)
+// Question array is given a default placeholder, replaced by API pull if successful
+questionArray.push(new Question("This is a test question",
+  ["choice 1", "choice 2", "choice 3"], "answer"))
+  
+// // Main execution
+// downloadQuestions(srcVideoGames)
 
-$(choicesCheck).on("click", function () {
+
+$(choicesCheck).on("click", function() {
   $("#submit-btn").prop("disabled", false)
 })
 
 // called when user clicks submit-btn
 $("input:radio").on("click", function() {
-  
+
   if (round >= 0)
-    checkAnswer()
-  $("#next-btn").prop("disabled", false)
-  
+    checkAnswer() ****
 })
 
 $("#next-btn").on("click", function() {
-  if (round < questionArray.length-1) {
+  if (round < questionArray.length - 1) {
     round++
-  }
-
-  else {
+  } else {
     alert("Game Over!")
     round = 0
   }
-  updateUI(questionArray[round])
+  nextRound(questionArray[round])
 })
