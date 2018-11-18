@@ -2,11 +2,15 @@ body {
   width: 70%;
   margin: auto;
   font-size: 1.4rem;
+  background-image: url(../images/Chalkboard.jpg);
 }
 
 .jumbotron {
-  margin-top: 5rem;
+  margin-top: 2rem;
   padding: 1rem 2rem;
+  background-color: #497959;
+  color: #ffffff;
+  
 }
 #question {
   font-size: 1.5rem;
@@ -29,4 +33,8 @@ body {
 h2 {
   text-align: center;
   font-weight: bold;
+}
+
+.my-4 {
+  border-color: white;
 }

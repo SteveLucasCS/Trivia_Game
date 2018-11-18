@@ -52,7 +52,6 @@ class Question {
     this.choices = choices
     this.answer = answer
     this.choices.push(answer)
-
   }
 }
 
@@ -112,8 +111,8 @@ function defaultQuestions() {
  */
 function checkAnswer() {
   for (var i = 0; i < 4; i++) {
-    i === answerIndex ? $(choicesText[i]).css("color", "green") :
-      $(choicesText[i]).css("color", "red")
+    i === answerIndex ? $(choicesText[i]).css("font-weight", "bold") :
+      $(choicesText[i]).css("text-decoration", "line-through")
     $(choicesCheck[i]).prop("disabled", true)
   }
 
@@ -154,7 +153,9 @@ function nextRound(q) {
     if ($(choicesCheck[i]).prop("disabled"))
       $(choicesCheck[i]).prop("disabled", false)
 
-    $(choicesText[i]).css("color", "black")
+    $(choicesText[i]).css("text-decoration", "none")
+    $(choicesText[i]).css("font-weight", "normal")
+
     $("#round").text(round + 1)
     //total number of rounds
     $("#total-rounds").text(srcAmount)
@@ -179,12 +180,12 @@ function tick() {
 /** main questionArray containing all questions for a game */
 var questionArray = []
 
-// Question array is given a default placeholder, replaced by API pull if successful
-questionArray.push(new Question("This is a test question",
-  ["choice 1", "choice 2", "choice 3"], "answer"))
+// // Question array is given a default placeholder, replaced by API pull if successful
+// questionArray.push(new Question("This is a test question",
+//   ["choice 1", "choice 2", "choice 3"], "answer"))
   
-// // Main execution
-// downloadQuestions(srcVideoGames)
+// Main execution
+downloadQuestions(srcVideoGames)
 
 
 $(choicesCheck).on("click", function() {
@@ -195,7 +196,8 @@ $(choicesCheck).on("click", function() {
 $("input:radio").on("click", function() {
 
   if (round >= 0)
-    checkAnswer() ****
+    checkAnswer()
+  
 })
 
 $("#next-btn").on("click", function() {
